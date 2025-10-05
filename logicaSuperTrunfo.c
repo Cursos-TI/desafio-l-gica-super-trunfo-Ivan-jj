@@ -4,10 +4,17 @@ int main(){
     // cada uma das variáveis estão seguindo a regra de cada carta onde 1 é para a primeira e 2 para a segunda
     char estado1, estado2, cartacode1[4], cartacode2[4], cidade1[25], cidade2[25];
     unsigned long int populacao1, populacao2;
-    int turismo1, turismo2, resultadocarta, opcao; 
+    int turismo1, turismo2, resultadocarta, opcao1, opcao2; 
     float area1, area2, PIB1, PIB2, dencidade1, dencidade2, PIBper1, PIBper2, superpoder1, superpoder2;
 
-    printf("Bem vindo ao sistema de cadastro de cartas para o jogo Super Trunfo de Países\n");
+    // Variaveis para comparação das cartas
+    float valorprincipal1, valorprincipal2;  //Valores de atributo principal
+    float valordesempate1, valordesempate2;  //Valores de atributo de desempate
+    int menor_vence_p, menor_vence_d; // Flags: 1 "Menor vence", 0 "Maior vence"
+    int vencedor_final; // Flags: 1 para carta 1, 2 cara carta 2, 0 para empate
+    const char *nome_atributo_p, *nome_atributo_d; // Exibir nome
+
+    printf("Bem vindo ao sistema de cadastro de cartas para o jogo Super Trunfo de Cidades\n");
 
     // inicio de input das informações
     printf("Informações a seguir são para a primeira carta.\n");
@@ -107,155 +114,88 @@ int main(){
     superpoder1 = (float)populacao1 + area1 + PIB1 + (float)turismo1 + PIBper1 + (1.0 / dencidade1);
     superpoder2 = (float)populacao2 + area2 + PIB2 + (float)turismo2 + PIBper2 + (1.0 / dencidade2);
 
-    //  Logica para determinar o vencedor
+    //  Logica de comparação dos atributos
     
+    // 1 - Escolha do primeiro atributo
     printf("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-    printf("\n*** Escolha o Atributo para Comparação ***\n");
-    printf("1. População (Maior valor vence)\n");
-    printf("2. Área (Maior valor vence)\n");
-    printf("3. PIB (Maior valor vence)\n");
-    printf("4. Número de Pontos Turísticos (Maior valor vence)\n");
-    printf("5. Densidade Demográfica (Menor valor vence)\n");
-    printf("6. PIB per Capita (Maior valor vence) \n");
-    printf("7. Super Poder (Maior valor vence) \n");
-    printf("Digite o número da opção (1 a 7): ");
-    scanf("%d", &opcao);
+    printf("\n*** Escolha o Primeiro atributo para comparação ***\n");
+    printf("[1]. População (Maior valor vence)\n");
+    printf("[2]. Área (Maior valor vence)\n");
+    printf("[3]. PIB (Maior valor vence)\n");
+    printf("[4]. Número de Pontos Turísticos (Maior valor vence)\n");
+    printf("[5]. Densidade Demográfica (Menor valor vence)\n");
+    printf("[6]. PIB per Capita (Maior valor vence) \n");
+    printf("[7]. Super Poder (Maior valor vence) \n");
+    printf("Digite uma opção de (1 a 7): ");
+    scanf("%d", &opcao1);
     printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
     
-    switch (opcao)
-    {
-    case 1: // logica para população
-        printf("Comparação de cartas (Atributo População): \n");
-        printf("Carta 1 - (%s): %d \n", cidade1, populacao1);
-        printf("Carta 2 - (%s): %d \n", cidade2, populacao2);
-        
-        // Regra: Maior vence
-        if (populacao1 > populacao2) {
-            printf("Resultado: Carta 1 (%s) venceu! \n", cidade1);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else if (populacao2 > populacao1) {
-            printf("Resultado: Carta 2 (%s) venceu! \n", cidade2);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else {
-            printf("Resultado: Empate!\n");
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        }
-        break;
+    // 2 - Escolha do segundo atributo
+    printf("***  Escolha o Segundo atributo para comparação ***\n");
+    printf("Caso o atributo seja o mesmo não haverá desempate.\n");
+    printf("Digite uma segunda opção de (1 a 7): ");
+    scanf("%d", &opcao2);
 
-    case 2: // Logica para Area
-        printf("Comparação de cartas (Atributo Área): \n");
-        printf("Carta 1 - (%s): %.2f \n", cidade1, area1);
-        printf("Carta 2 - (%s): %.2f \n", cidade2, area2);
-        
-        // Regra: Maior vence        
-        if (area1 > area2) {
-            printf("Resultado: Carta 1 (%s) venceu! \n", cidade1);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else if  (area2 > area1) {
-            printf("Resultado: Carta 2 (%s) venceu! \n", cidade2);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else {
-            printf("Resultado: Empate!\n");
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        }
-        break;
+    // Configuração do switch para valores e regras
 
-    case 3: // Logica para PIB
-        printf("Comparação de cartas (PIB): \n");
-        printf("Carta 1 - (%s): %.2f \n", cidade1, PIB1);
-        printf("Carta 2 - (%s): %.2f \n", cidade2, PIB2);
-        
-        // Regra: Maior vence
-        if (PIB1 > PIB2) {
-            printf("Resultado: Carta 1 (%s) venceu! \n", cidade1);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else if (PIB2 > PIB1) {
-            printf("Resultado: Carta 2 (%s) venceu! \n", cidade2);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else {
-            printf("Resultado: Empate!\n");
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        }
-        break;
-        
-    case 4: // Logica para Turismo
-        printf("Comparação de cartas (Atributo Pontos Turísticos): \n");
-        printf("Carta 1 - (%s): %d \n", cidade1, turismo1);
-        printf("Carta 2 - (%s): %d \n", cidade2, turismo2);
-        
-        // Regra: Maior vence
-        if (turismo1 > turismo2) {
-            printf("Resultado: Carta 1 (%s) venceu! \n", cidade1);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else if (turismo2 < turismo1) {
-            printf("Resultado: Carta 2 (%s) venceu! \n", cidade2);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else {
-            printf("Resultado: Empate!\n");
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        }
-        break;
-        
-    case 5: // Logica para Dencidade
-        printf("Comparação de cartas (Atributo Densidade Populacional): \n");
-        printf("Carta 1 - (%s): %.2f \n", cidade1, dencidade1);
-        printf("Carta 2 - (%s): %.2f \n", cidade2, dencidade2);
-        
-        // Regra Especial: Menor vence
-        if (dencidade1 < dencidade2) {
-            printf("Resultado: Carta 1 (%s) venceu! \n", cidade1);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else {
-            if (dencidade2 < dencidade1) {
-                printf("Resultado: Carta 2 (%s) venceu! \n", cidade2);
-                printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-            } 
-            else {
-                printf("Resultado: Empate!\n");
-                printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-            }
-        }
-        break;
-
-    case 6: // Logica para PIB Percapital
-        printf("Comparação de cartas (Atributo PIB per capita): \n");
-        printf("Carta 1 - (%s): %.2f \n", cidade1, PIBper1);
-        printf("Carta 2 - (%s): %.2f \n", cidade2, PIBper2);
-        
-        // Regra: Maior vence
-        if (PIBper1 > PIBper2) {
-            printf("Resultado: Carta 1 (%s) venceu! \n", cidade1);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else if (PIBper2 > PIBper1) {
-            printf("Resultado: Carta 2 (%s) venceu! \n", cidade2);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else {
-            printf("Resultado: Empate!\n");
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        }
-        break;
-        
-    case 7: // Logica para Super Poder
-        printf("Comparação de cartas (Atributo Supor Poder): \n");
-        printf("Carta 1 - (%s): %.2f \n", cidade1, superpoder1);
-        printf("Carta 2 - (%s): %.2f \n", cidade2, superpoder2);
-                
-        // Regra: Maior vence
-        if (superpoder1 > superpoder2) {
-            printf("Resultado: Carta 1 (%s) venceu! \n", cidade1);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else if (superpoder2 > superpoder1) {
-            printf("Resultado: Carta 2 (%s) venceu! \n", cidade2);
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        } else {
-            printf("Resultado: Empate!\n");
-            printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-        }
-        break;
-
-    default:
-        printf("\nOpção inválida! Por favor, escolha um número de 1 a 7.\n");
-        break;
+    // Configuração do atributo principal.
+    switch (opcao1){
+    case 1: valorprincipal1 = (float)populacao1; valorprincipal2 = (float)populacao2; menor_vence_p = 0; nome_atributo_p = "População (Maior)"; break;
+    case 2: valorprincipal1 = area1; valorprincipal2 = area2; menor_vence_p = 0; nome_atributo_p = "Área (Maior)"; break;
+    case 3: valorprincipal1 = PIB1; valorprincipal2 = PIB2; menor_vence_p = 0; nome_atributo_p = "PIB (Maior)"; break;
+    case 4: valorprincipal1 = (float)turismo1; valorprincipal2 = (float)turismo2; menor_vence_p = 0; nome_atributo_p = "Pontos Turísticos (Maior)"; break;
+    case 5: valorprincipal1 = dencidade1; valorprincipal2 = dencidade2; menor_vence_p = 1; nome_atributo_p = "Densidade Demográfica (Menor)"; break;
+    case 6: valorprincipal1 = PIBper1; valorprincipal2 = PIBper2; menor_vence_p = 0; nome_atributo_p = "PIB per Capita (Maior)"; break;
+    case 7: valorprincipal1 = superpoder1; valorprincipal2 = superpoder2; menor_vence_p = 0; nome_atributo_p = "Super Poder (Maior)"; break;
+    default: printf("Erro: Opção Inválida.\n"); return 1;
     }
+
+    // Configuração do atributo de desempate.
+    switch (opcao2){
+    case 1: valordesempate1 = (float)populacao1; valordesempate2 = (float)populacao2; menor_vence_d = 0; nome_atributo_d = "População (Maior)"; break;
+    case 2: valordesempate1 = area1; valordesempate2 = area2; menor_vence_d = 0; nome_atributo_d = "Área (Maior)"; break;
+    case 3: valordesempate1 = PIB1; valordesempate2 = PIB2; menor_vence_d = 0; nome_atributo_d = "PIB (Maior)"; break;
+    case 4: valordesempate1 = (float)turismo1; valordesempate2 = (float)turismo2; menor_vence_d = 0; nome_atributo_d = "Pontos Turísticos (Maior)"; break;
+    case 5: valordesempate1 = dencidade1; valordesempate2 = dencidade2; menor_vence_d = 1; nome_atributo_d = "Densidade Demográfica (Menor)"; break;
+    case 6: valordesempate1 = PIBper1; valordesempate2 = PIBper2; menor_vence_d = 0; nome_atributo_d = "PIB per Capita (Maior)"; break;
+    case 7: valordesempate1 = superpoder1; valordesempate2 = superpoder2; menor_vence_d = 0; nome_atributo_d = "Super Poder (Maior)"; break;
+    default: printf("Erro: Opção Inválida.\n"); return 1;
+    }
+
+    printf("\n======================================\n");
+    printf("--- RESULTADO DA BATALHA ---\n");
+    printf("Atributo Principal: %s Carta 1: %.2f | Carta 2: %.2f\n", nome_atributo_p, valorprincipal1, valorprincipal2);
+
+    // Lógica de decisão para ganhador
+
+    // Logica para atributo principal
+    if (menor_vence_p ? (valorprincipal1 < valorprincipal2) : (valorprincipal1 > valorprincipal2)){
+        vencedor_final = 1;
+        printf("Carta 1 (%s) Vence no Principal!\n", cidade1);
+    } 
+    else if (menor_vence_p ? (valorprincipal2 < valorprincipal1) : (valorprincipal2 > valorprincipal1)){
+        vencedor_final = 2;
+        printf("Carta 2 (%s) Vence no Principal!\n", cidade2);
+    }
+    else {
+        // Empate no Atributo principal, vai para a logica de desempate
+        printf("Empate do principal. Atributo de Desenpate: %s Carta 1: %.2f | Carta 2: %.2f\n", nome_atributo_d, valordesempate1, valordesempate2);
+
+        // Determina o vencedor do desempate
+        // checa se a carta 1 vence no desempate (retorna 1)
+        vencedor_final = (menor_vence_d ? (valordesempate1 < valordesempate2) : (valordesempate1 > valordesempate2)) ? 1 :
+        // checa se a carta 2 vence no desempate (retorna 2), caso não vença (retorna 0) para empate
+        ((menor_vence_d ? (valordesempate2 < valordesempate1) : (valordesempate2 > valordesempate1)) ? 2 : 0);
+
+        // Resultado final do desempate
+        if (vencedor_final == 1){
+            printf("Resultado Final: Carta 1 (%s) VENCEU no Desempate!\n", cidade1);
+        } else if (vencedor_final == 2) {
+            printf("Resultado Final: Carta 2 (%s) VENCEU no Desempate!\n", cidade2);
+        } else {
+            printf("Resultado Final: EMPATE GERAL!\n");
+        }
+    }
+    printf("======================================\n");
     return 0;    
 }
